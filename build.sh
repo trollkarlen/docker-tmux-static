@@ -3,14 +3,16 @@
 set -e
 set -x
 
-VERSION=2.6
+VERSION="${TMUX_VERSION:-3.1}"
+NCURSES_VERSION="${NCURSES_VERSION:-6.2}"
+LIBEVENT_VERSION="${LIBEVENT_VERSION:-2.1.12}"
 
 # based on: https://gist.github.com/pistol/5069697
 
 # ncurses
-wget http://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.1.tar.gz
-tar xvzf ncurses-6.1.tar.gz
-cd ncurses-6.1
+wget http://ftp.gnu.org/pub/gnu/ncurses/ncurses-$NCURSES_VERSION.tar.gz
+tar xvzf ncurses-$NCURSES_VERSION.tar.gz
+cd ncurses-$NCURSES_VERSION
 ./configure --prefix=$HOME/local
 make -j8
 make install
@@ -19,7 +21,7 @@ cd ..
 # libevent
 git clone git://github.com/libevent/libevent.git
 cd libevent
-git checkout release-2.1.8-stable
+git checkout release-$LIBEVENT_VERSION-stable
 ./autogen.sh
 ./configure --prefix=$HOME/local
 make -j8
